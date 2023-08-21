@@ -8,7 +8,11 @@ module.exports = (sequelize, Sequelize) => {
     },
     price: {
       type: Sequelize.STRING
+    },
+    image: {
+      type: Sequelize.STRING
     }
+
   });
 
   return Products;
