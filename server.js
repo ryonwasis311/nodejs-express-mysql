@@ -1,6 +1,5 @@
 const express = require("express");
 const cors = require("cors");
-const bodyParser = require('body-parser');
 
 const app = express();
 
@@ -16,8 +15,7 @@ app.use(express.json());
 
 // parse requests of content-type - application/x-www-form-urlencoded
 app.use(express.urlencoded({ extended: true }));
-// app.use(bodyParser.json());
-// app.use(bodyParser.urlencoded({ extended: true }));
+
 app.use(function(req, res, next) {
   res.header(
     "Access-Control-Allow-Headers",
@@ -30,6 +28,12 @@ const db = require("./app/models");
 const Role = db.role;
 
 db.sequelize.sync();
+
+db.sequelize.authenticate().then(() => {
+  console.log('Connection has been established successfully.');
+}).catch((error) => {
+  console.error('Unable to connect to the database: ', error);
+});
 // force: true will drop the table if it already exists
 // db.sequelize.sync({force: true}).then(() => {
 //   console.log('Drop and Resync Database with { force: true }');
@@ -48,6 +52,7 @@ require('./app/routes/products.routes')(app);
 // require("./app/routes/index");
 // set port, listen for requests
 const PORT = process.env.PORT || 8080;
+
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}.`);
 });
