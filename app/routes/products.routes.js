@@ -1,14 +1,11 @@
-const { verifySignUp } = require("../middleware");
+const { verifySignUp, authJwt } = require("../middleware");
 const products_controller = require("../controllers/products.controller");
 
 module.exports = function(app) {
 
   app.post(
     "/api/products/create",
-    [
-      verifySignUp.checkDuplicateUsernameOrEmail,
-      verifySignUp.checkRolesExisted
-    ],
+    authJwt.verifyToken,
     products_controller.create
   );
 };
