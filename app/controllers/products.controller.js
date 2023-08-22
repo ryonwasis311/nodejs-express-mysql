@@ -5,7 +5,7 @@ exports.create = (req, res) => {
   const products = new Products({
     title: req.body.title,
     description: req.body.description,
-    image: req.file.filename,
+    image: req.body.image,
     price: req.body.price
   });
   products.save();
