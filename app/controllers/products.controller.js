@@ -6,8 +6,9 @@ exports.create = (req, res) => {
   const products = new Products({
     title: req.body.title,
     description: req.body.description,
-    image: req.body.image,
+    image: req.file.filename,
     price: req.body.price,
+    owner: req.userId,
   });
   products.save();
   res.json(products);
@@ -25,10 +26,9 @@ exports.get = async (req, res) => {
 
 //Update a product by the id in the request
 exports.update = (req, res) => {
-  const id = req.userId;
-  const productId = +req.params.id;
+  const id = req.params.id;
   Products.update(req.body, {
-    where: { id: productId },
+    where: { id: id },
   })
     .then((num) => {
       if (num == 1) {
