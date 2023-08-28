@@ -3,6 +3,7 @@ const Products = db.products;
 
 //Create and Save a new Product
 exports.create = (req, res) => {
+  console.log(req.body);
   const products = new Products({
     title: req.body.title,
     description: req.body.description,
@@ -11,6 +12,7 @@ exports.create = (req, res) => {
     owner: req.userId,
   });
   products.save();
+  console.log("Operation successed! ")
   res.json(products);
 };
 
